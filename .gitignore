@@ -1,6 +1,8 @@
 .DS_Store
 Thumbs.db
 nbproject
-dmCorePlugin/test/project/cache/
+app/cache/
+app/logs/
 *.orig
 *.swp
+.svn
