@@ -121,7 +121,7 @@ class FrontController extends BaseFrontController {
 //
 //    $this->launchDirectActions();
 
-    return $this->render('DiemFrontBundle:Layout:'.$template.'.html.twig', array('name' => 'world'));
+    return $this->render('DiemFront:Layout:'.$template.'.html.twig', array('name' => 'world'));
   }
 //
 //  /*

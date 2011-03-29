@@ -7,5 +7,5 @@
 #    defaults: { _controller: FrameworkBundle:Default:index }
 
 diem:
-    resource: "@DiemFrontBundle/Resources/config/routing.yml"
+    resource: "@DiemFront/Resources/config/routing.yml"
 
