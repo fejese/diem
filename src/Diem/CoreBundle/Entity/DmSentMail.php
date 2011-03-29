@@ -115,7 +115,7 @@ class DmSentMail
      *
      * @orm:ManyToOne(targetEntity="DmMailTemplate")
      * @orm:JoinColumns({
-     *   @orm:JoinColumn(name="dm_mail_template_id", referencedColumnName="id")
+     *   @orm:JoinColumn(name="dm_mail_template_id", referencedColumnName="id", onDelete="SET NULL")
      * })
      */
     private $dmMailTemplate;

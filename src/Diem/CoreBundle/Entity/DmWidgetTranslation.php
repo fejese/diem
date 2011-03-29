@@ -40,7 +40,7 @@ class DmWidgetTranslation
      *
      * @orm:ManyToOne(targetEntity="DmWidget")
      * @orm:JoinColumns({
-     *   @orm:JoinColumn(name="dm_widget_id", referencedColumnName="id")
+     *   @orm:JoinColumn(name="dm_widget_id", referencedColumnName="id", nullable=false, onDelete="CASCADE", onUpdate="CASCADE")
      * })
      */
     private $dmWidget;

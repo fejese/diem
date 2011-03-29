@@ -103,21 +103,21 @@ class DmMailTemplateTranslation
      *
      * @orm:Column(name="is_html", type="boolean", nullable=false)
      */
-    private $isHtml;
+    private $isHtml = false;
 
     /**
      * @var boolean $isActive
      *
      * @orm:Column(name="is_active", type="boolean", nullable=false)
      */
-    private $isActive;
+    private $isActive = true;
 
     /**
      * @var DmMailTemplate
      *
      * @orm:ManyToOne(targetEntity="DmMailTemplate")
      * @orm:JoinColumns({
-     *   @orm:JoinColumn(name="dm_mail_template_id", referencedColumnName="id")
+     *   @orm:JoinColumn(name="dm_mail_template_id", referencedColumnName="id", nullable=false, onDelete="CASCADE", onUpdate="CASCADE")
      * })
      */
     private $dmMailTemplate;

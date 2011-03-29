@@ -75,35 +75,35 @@ class DmPageTranslation
      *
      * @orm:Column(name="auto_mod", type="string", length=6, nullable=false)
      */
-    private $autoMod;
+    private $autoMod = 'snthdk';
 
     /**
      * @var boolean $isActive
      *
      * @orm:Column(name="is_active", type="boolean", nullable=false)
      */
-    private $isActive;
+    private $isActive = true;
 
     /**
      * @var boolean $isSecure
      *
      * @orm:Column(name="is_secure", type="boolean", nullable=false)
      */
-    private $isSecure;
+    private $isSecure = false;
 
     /**
      * @var boolean $isIndexable
      *
      * @orm:Column(name="is_indexable", type="boolean", nullable=false)
      */
-    private $isIndexable;
+    private $isIndexable = true;
 
     /**
      * @var DmPage
      *
      * @orm:ManyToOne(targetEntity="DmPage")
      * @orm:JoinColumns({
-     *   @orm:JoinColumn(name="dm_page_id", referencedColumnName="id")
+     *   @orm:JoinColumn(name="dm_page_id", referencedColumnName="id", nullable=false, onDelete="CASCADE", onUpdate="CASCADE")
      * })
      */
     private $dmPage;

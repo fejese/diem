@@ -45,7 +45,7 @@ class DmUser
      *
      * @orm:Column(name="algorithm", type="string", length=128, nullable=false)
      */
-    private $algorithm;
+    private $algorithm = 'sha1';
 
     /**
      * @var string $salt
@@ -64,16 +64,16 @@ class DmUser
     /**
      * @var boolean $isActive
      *
-     * @orm:Column(name="is_active", type="boolean", nullable=true)
+     * @orm:Column(name="is_active", type="boolean", nullable=false)
      */
-    private $isActive;
+    private $isActive = true;
 
     /**
      * @var boolean $isSuperAdmin
      *
-     * @orm:Column(name="is_super_admin", type="boolean", nullable=true)
+     * @orm:Column(name="is_super_admin", type="boolean", nullable=false)
      */
-    private $isSuperAdmin;
+    private $isSuperAdmin = false;
 
     /**
      * @var datetime $lastLogin
@@ -109,10 +109,10 @@ class DmUser
      * @orm:ManyToMany(targetEntity="DmGroup", inversedBy="dmUser")
      * @orm:JoinTable(name="dm_user_group",
      *   joinColumns={
-     *     @orm:JoinColumn(name="dm_user_id", referencedColumnName="id")
+     *     @orm:JoinColumn(name="dm_user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      *   },
      *   inverseJoinColumns={
-     *     @orm:JoinColumn(name="dm_group_id", referencedColumnName="id")
+     *     @orm:JoinColumn(name="dm_group_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      *   }
      * )
      */
@@ -124,10 +124,10 @@ class DmUser
      * @orm:ManyToMany(targetEntity="DmPermission", inversedBy="dmUser")
      * @orm:JoinTable(name="dm_user_permission",
      *   joinColumns={
-     *     @orm:JoinColumn(name="dm_user_id", referencedColumnName="id")
+     *     @orm:JoinColumn(name="dm_user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      *   },
      *   inverseJoinColumns={
-     *     @orm:JoinColumn(name="dm_permission_id", referencedColumnName="id")
+     *     @orm:JoinColumn(name="dm_permission_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      *   }
      * )
      */

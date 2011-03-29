@@ -17,7 +17,7 @@ class DmRememberKey
      * @orm:Id
      * @orm:GeneratedValue(strategy="IDENTITY")
      */
-    private $ipAddress;
+    private $ipAddress = '';
 
     /**
      * @var string $rememberKey
@@ -38,7 +38,7 @@ class DmRememberKey
      *
      * @orm:ManyToOne(targetEntity="DmUser")
      * @orm:JoinColumns({
-     *   @orm:JoinColumn(name="dm_user_id", referencedColumnName="id")
+     *   @orm:JoinColumn(name="dm_user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $dmUser;

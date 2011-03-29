@@ -89,7 +89,7 @@ class DmMedia
      *
      * @orm:ManyToOne(targetEntity="DmMediaFolder")
      * @orm:JoinColumns({
-     *   @orm:JoinColumn(name="dm_media_folder_id", referencedColumnName="id")
+     *   @orm:JoinColumn(name="dm_media_folder_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $dmMediaFolder;
