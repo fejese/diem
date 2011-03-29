@@ -5,7 +5,9 @@ namespace Diem\CoreBundle\Entity;
 /**
  * Diem\CoreBundle\Entity\DmRedirect
  *
- * @orm:Table(name="dm_redirect")
+ * @orm:Table(name="dm_redirect",uniqueConstraints={
+ *  @orm:UniqueConstraint(name="source", columns={"source"})
+ * })
  * @orm:Entity
  */
 class DmRedirect

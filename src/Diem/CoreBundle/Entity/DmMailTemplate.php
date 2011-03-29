@@ -5,7 +5,10 @@ namespace Diem\CoreBundle\Entity;
 /**
  * Diem\CoreBundle\Entity\DmMailTemplate
  *
- * @orm:Table(name="dm_mail_template",uniqueConstraints={@UniqueConstraint(name="name", columns={"name"})})
+ * 
+ * @orm:Table(name="dm_mail_template",uniqueConstraints={
+ *  @orm:UniqueConstraint(name="name", columns={"name"})
+ * })
  * @orm:Entity
  */
 class DmMailTemplate

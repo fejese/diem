@@ -5,7 +5,9 @@ namespace Diem\CoreBundle\Entity;
 /**
  * Diem\CoreBundle\Entity\DmMediaFolder
  *
- * @orm:Table(name="dm_media_folder")
+ * @orm:Table(name="dm_media_folder",uniqueConstraints={
+ *  @orm:UniqueConstraint(name="rel_path", columns={"rel_path"})
+ * })
  * @orm:Entity
  */
 class DmMediaFolder

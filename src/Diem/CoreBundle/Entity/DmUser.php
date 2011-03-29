@@ -5,7 +5,14 @@ namespace Diem\CoreBundle\Entity;
 /**
  * Diem\CoreBundle\Entity\DmUser
  *
- * @orm:Table(name="dm_user")
+ * @orm:Table(name="dm_user",
+ * indexes={
+ *  @orm:index(name="is_active", columns={"is_active"})},
+ * uniqueConstraints={
+ *  @orm:UniqueConstraint(name="username", columns={"username"}),
+ *  @orm:UniqueConstraint(name="email", columns={"email"}),
+ *  @orm:UniqueConstraint(name="forgot_password_code", columns={"forgot_password_code"})
+ * })
  * @orm:Entity
  */
 class DmUser

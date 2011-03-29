@@ -5,7 +5,9 @@ namespace Diem\CoreBundle\Entity;
 /**
  * Diem\CoreBundle\Entity\DmPage
  *
- * @orm:Table(name="dm_page")
+ * @orm:Table(name="dm_page",uniqueConstraints={
+ *  @orm:UniqueConstraint(name="module_action", columns={"module", "action", "record_id"})
+ * })
  * @orm:Entity(repositoryClass="Diem\CoreBundle\Entity\DmPageRepository")
  */
 class DmPage {

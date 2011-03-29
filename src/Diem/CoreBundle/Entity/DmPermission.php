@@ -5,7 +5,9 @@ namespace Diem\CoreBundle\Entity;
 /**
  * Diem\CoreBundle\Entity\DmPermission
  *
- * @orm:Table(name="dm_permission")
+ * @orm:Table(name="dm_permission",uniqueConstraints={
+ *  @orm:UniqueConstraint(name="name", columns={"name"})
+ * })
  * @orm:Entity
  */
 class DmPermission

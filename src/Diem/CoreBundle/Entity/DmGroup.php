@@ -5,7 +5,9 @@ namespace Diem\CoreBundle\Entity;
 /**
  * Diem\CoreBundle\Entity\DmGroup
  *
- * @orm:Table(name="dm_group")
+ * @orm:Table(name="dm_group",uniqueConstraints={
+ *  @orm:UniqueConstraint(name="name", columns={"name"})
+ * })
  * @orm:Entity
  */
 class DmGroup

@@ -5,7 +5,9 @@ namespace Diem\CoreBundle\Entity;
 /**
  * Diem\CoreBundle\Entity\DmAutoSeo
  *
- * @orm:Table(name="dm_auto_seo")
+ * @orm:Table(name="dm_auto_seo",uniqueConstraints={
+ *  @orm:UniqueConstraint(name="module_action", columns={"module", "action"})
+ * })
  * @orm:Entity
  */
 class DmAutoSeo
