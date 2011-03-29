@@ -1,8 +1,8 @@
 .DS_Store
 Thumbs.db
 nbproject
-app/cache/
-app/logs/
+app/cache/*
+app/logs/*
 *.orig
 *.swp
 .svn

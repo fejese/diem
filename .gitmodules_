@@ -1,0 +1,40 @@
+[submodule "symfony"]
+	path = vendor/symfony
+	url = git://github.com/symfony/symfony.git
+
+[submodule "assetic"]
+	path = vendor/symfony/vendor/assetic
+	url = git://github.com/kriswallsmith/assetic.git
+
+[submodule "doctrine"]
+	path = vendor/symfony/vendor/doctrine
+	url = git://github.com/doctrine/doctrine2.git
+
+[submodule "doctrine-data-fixtures"]
+	path = vendor/symfony/vendor/doctrine-data-fixtures
+	url = git://github.com/doctrine/data-fixtures.git
+
+[submodule "doctrine-dbal"]
+	path = vendor/symfony/vendor/doctrine-dbal
+	url = git://github.com/doctrine/dbal.git
+
+[submodule "doctrine-common"]
+	path = vendor/symfony/vendor/doctrine-common
+	url = git://github.com/doctrine/common.git
+
+[submodule "doctrine-migrations"]
+	path = vendor/symfony/vendor/doctrine-migrations
+	url = git://github.com/doctrine/migrations.git
+
+[submodule "swiftmailer"]
+	path = vendor/symfony/vendor/swiftmailer
+	url = git://github.com/swiftmailer/swiftmailer.git origin/4.1
+
+[submodule "twig"]
+	path = vendor/symfony/vendor/twig
+	url = git://github.com/fabpot/Twig.git
+
+[submodule "zend"]
+	path = vendor/symfony/vendor/zend
+	url = git://github.com/zendframework/zf2.git
+
