@@ -95,15 +95,13 @@ class FrontController extends BaseFrontController {
 //    return $this->renderPage();
 //  }
 //
-  protected function renderPage()
-  {
+  protected function renderPage() {
     // share current page
     //$this->context->setPage($this->page);
 
     $response = new Response();
 
-    if ($this->page->isModuleAction('main', 'error404'))
-    {
+    if ($this->page->isModuleAction('main', 'error404')) {
       //$this->response->setStatusCode(404);
       $response = new Response('', 404);
     }
@@ -115,75 +113,65 @@ class FrontController extends BaseFrontController {
 //
 //    $this->setLayout(sfConfig::get('sf_root_dir').'/apps/front/modules/dmFront/templates/layout');
 //
-//    $this->helper = $this->getService('page_helper');
+    //$template_vars['helper'] = $this->get('page_helper');
 //
 //    $this->isEditMode = $this->getUser()->getIsEditMode();
-//
-//    $this->launchDirectActions();
+    $template_vars['isEditMode'] = false;
 
-    return $this->render('DiemFront:Layout:'.$template.'.html.twig', array('name' => 'world'));
+    //$this->launchDirectActions();
+
+    return $this->render('DiemFront:Layout:' . $template . '.html.twig', $template_vars);
   }
-//
-//  /*
-//   * If an sfAction exists for the current page module.action,
-//   * it will be executed
-//   * If some sfActions exist for the current widgets module.action,
-//   * they will be executed to
-//   */
-//  protected function launchDirectActions()
-//  {
-//    $moduleManager = $this->context->getModuleManager();
-//
-//    $moduleActions = array();
-//
-//    // Add module action for page
-//    if($moduleManager->hasModule($this->page->get('module')))
-//    {
-//      $moduleActions[] = $this->page->getModuleAction().'Page';
-//    }
-//
-//    // Find module/action for page widgets ( including layout )
-//    foreach($this->helper->getAreas() as $areaArray)
-//    {
-//      foreach($areaArray['Zones'] as $zoneArray)
-//      {
-//        foreach($zoneArray['Widgets'] as $widgetArray)
-//        {
-//          if($moduleManager->hasModule($widgetArray['module']))
-//          {
-//            $widgetModuleAction = $widgetArray['module'].'/'.$widgetArray['action'].'Widget';
-//
-//            if(!in_array($widgetModuleAction, $moduleActions))
-//            {
-//              $moduleActions[] = $widgetModuleAction;
-//            }
-//          }
-//        }
-//      }
-//    }
-//
-//    foreach($moduleActions as $moduleAction)
-//    {
-//      list($module, $action) = explode('/', $moduleAction);
-//
-//      if ($this->getController()->actionExists($module, $action))
-//      {
-//        $actionToRun = 'execute'.ucfirst($action);
-//
-//        try
-//        {
-//            $this->getController()->getAction($module, $action)->preExecute();
-//            $this->getController()->getAction($module, $action)->$actionToRun($this->getRequest());
-//            $this->getController()->getAction($module, $action)->postExecute();
-//        }
-//        catch(sfControllerException $e)
-//        {
-//          $this->getContext()->getLogger()->warning(sprintf('The %s/%s direct action does not exist', $module, $action));
-//        }
-//      }
-//    }
-//  }
-//
+
+  /*
+   * If an sfAction exists for the current page module.action,
+   * it will be executed
+   * If some sfActions exist for the current widgets module.action,
+   * they will be executed to
+   */
+
+  protected function launchDirectActions() {
+    $moduleManager = $this->context->getModuleManager();
+
+    $moduleActions = array();
+
+    // Add module action for page
+    if ($moduleManager->hasModule($this->page->get('module'))) {
+      $moduleActions[] = $this->page->getModuleAction() . 'Page';
+    }
+
+    // Find module/action for page widgets ( including layout )
+    foreach ($this->helper->getAreas() as $areaArray) {
+      foreach ($areaArray['Zones'] as $zoneArray) {
+        foreach ($zoneArray['Widgets'] as $widgetArray) {
+          if ($moduleManager->hasModule($widgetArray['module'])) {
+            $widgetModuleAction = $widgetArray['module'] . '/' . $widgetArray['action'] . 'Widget';
+
+            if (!in_array($widgetModuleAction, $moduleActions)) {
+              $moduleActions[] = $widgetModuleAction;
+            }
+          }
+        }
+      }
+    }
+
+    foreach ($moduleActions as $moduleAction) {
+      list($module, $action) = explode('/', $moduleAction);
+
+      if ($this->getController()->actionExists($module, $action)) {
+        $actionToRun = 'execute' . ucfirst($action);
+
+        try {
+          $this->getController()->getAction($module, $action)->preExecute();
+          $this->getController()->getAction($module, $action)->$actionToRun($this->getRequest());
+          $this->getController()->getAction($module, $action)->postExecute();
+        } catch (sfControllerException $e) {
+          $this->getContext()->getLogger()->warning(sprintf('The %s/%s direct action does not exist', $module, $action));
+        }
+      }
+    }
+  }
+
 //  public function executeEditToggle(sfWebRequest $request)
 //  {
 //    $this->getUser()->setIsEditMode($request->getParameter('active'));

@@ -1,9 +1,34 @@
 {% extends "DiemFront::layout.html.twig" %}
 
 {% block content %}
-    {{ parent() }}
+{{ parent() }}
+<div id="dm_page"{% if isEditMode %} class="edit"{% endif %}>
 
-    <p>
-        Hello {{ name }}!
-    </p>
+     <div class="dm_layout">
+    {% block area %}
+    {% endblock %}
+    <div class="dm_layout_center clearfix">
+      <p>
+        Hello World!
+      </p>
+    </div>
+    {#
+    <?php echo $helper->renderArea('layout.top', '.clearfix') ?>
+
+    <div class="dm_layout_center clearfix">
+
+      <?php echo $helper->renderArea('layout.left') ?>
+
+      <?php echo $helper->renderArea('page.content') ?>
+
+      <?php echo $helper->renderArea('layout.right') ?>
+
+    </div>
+
+    <?php echo $helper->renderArea('layout.bottom', '.clearfix') ?>
+    #}
+  </div>
+
+</div>
+
 {% endblock %}

@@ -26,25 +26,4 @@ class DmArea
      */
     private $type;
 
-    /**
-     * @var DmLayout
-     *
-     * @orm:ManyToOne(targetEntity="DmLayout")
-     * @orm:JoinColumns({
-     *   @orm:JoinColumn(name="dm_layout_id", referencedColumnName="id")
-     * })
-     */
-    private $dmLayout;
-
-    /**
-     * @var DmPageView
-     *
-     * @orm:ManyToOne(targetEntity="DmPageView")
-     * @orm:JoinColumns({
-     *   @orm:JoinColumn(name="dm_page_view_id", referencedColumnName="id")
-     * })
-     */
-    private $dmPageView;
-
-
 }

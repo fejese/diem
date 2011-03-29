@@ -133,11 +133,11 @@ parameters:
 #  file_backup.class:          dmFileBackup          # Responsible for saving a copy of files edited. All files modified with a Diem code editor are backuped.
 #  file_backup.options:
 #    dir:                      'data/dm/backup/filesystem' # where to save files, relative to project root directory.
-#
-#  helper.class:               dmHelper              # Object oriented template helper.
-#  helper.options:
-#    use_beaf:                 false                 # whether to use the "before-after" functionality on £ helper
-#
+
+  helper.class:               Diem\FrontBundle\Page\dmHelper              # Object oriented template helper.
+  helper.options:
+    use_beaf:                 false                 # whether to use the "before-after" functionality on £ helper
+
 #  widget_type_manager.class:  dmWidgetTypeManager   # Responsible for managing widget types.
 #  widget_type_manager.options:
 #    config_file:              'config/dm/widget_types.yml' # path to the widget type configuration file, relative to the project directory
@@ -368,10 +368,10 @@ services:
 #    shared:                   true
 #    arguments:                [ @dispatcher, @filesystem, %file_backup.options% ]
 #
-#  helper:
-#    class:                    %helper.class%
-#    shared:                   true
-#    arguments:                [ @context, %helper.options% ]
+  helper:
+    class:                    %helper.class%
+    shared:                   true
+    arguments:                [ @service_container, %helper.options% ]
 #
 #  link_tag_factory:
 #    class:                    %link_tag_factory.class%

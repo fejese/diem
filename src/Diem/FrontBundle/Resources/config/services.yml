@@ -42,13 +42,13 @@ parameters:
 #
 #  layout_helper.class:        dmFrontLayoutHelper   # Responsible for rendering the front layout.
 #
-#  page_helper.class:          dmFrontPageBaseHelper # Responsible for rendering the front content.
-#  page_helper.view_class:     dmFrontPageViewHelper # Simple rendering for normal users
-#  page_helper.edit_class:     dmFrontPageEditHelper # Edit rendering for user who can modify the site
-#  page_helper.options:
-#    widget_css_class_pattern: %%module%%_%%action%% # Widget css class generation pattern.
-#                                                    # Available variables : module, action.
-#                                                    # Can be let empty to disable automatic widget classes
+  page_helper.class:          Diem\FrontBundle\Page\dmFrontPageBaseHelper # Responsible for rendering the front content.
+  page_helper.view_class:     dmFrontPageViewHelper # Simple rendering for normal users
+  page_helper.edit_class:     dmFrontPageEditHelper # Edit rendering for user who can modify the site
+  page_helper.options:
+    widget_css_class_pattern: %%module%%_%%action%% # Widget css class generation pattern.
+                                                    # Available variables : module, action.
+                                                    # Can be let empty to disable automatic widget classes
 #
 #  widget_renderer.class:      dmFrontWidgetRenderer # Responsible for rendering widgets
 #
@@ -141,10 +141,10 @@ services:
 #    shared:                   false
 #    arguments:                [ @context, %widget_view.type%, %widget_view.data% ]
 #
-#  page_helper:
-#    class:                    %page_helper.class%
-#    shared:                   true
-#    arguments:                [ @dispatcher, @service_container, @helper, %page_helper.options% ]
+  page_helper:
+    class:                    %page_helper.class%
+    shared:                   true
+    arguments:                [ @service_container, @helper, %page_helper.options% ]
 #
 #  widget_renderer:
 #    class:                    %widget_renderer.class%
