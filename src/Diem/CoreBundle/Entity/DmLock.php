@@ -6,7 +6,7 @@ namespace Diem\CoreBundle\Entity;
  * Diem\CoreBundle\Entity\DmLock
  *
  * @orm:Table(name="dm_lock",uniqueConstraints={
- *  @orm:UniqueConstraint(name="lock", columns={"user_id", "module", "action", "record_id"})
+ *  @orm:UniqueConstraint(name="lock_module_action", columns={"user_id", "module", "action", "record_id"})
  * })
  * @orm:Entity
  */
@@ -73,7 +73,7 @@ class DmLock {
    *
    * @orm:ManyToOne(targetEntity="DmUser")
    * @orm:JoinColumns({
-   *   @orm:JoinColumn(name="user_id", referencedColumnName="id")
+   *  @orm:JoinColumn(name="user_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
    * })
    */
   private $user;

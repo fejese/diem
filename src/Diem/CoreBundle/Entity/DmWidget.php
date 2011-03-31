@@ -59,7 +59,7 @@ class DmWidget
      *
      * @orm:ManyToOne(targetEntity="DmZone")
      * @orm:JoinColumns({
-     *   @orm:JoinColumn(name="dm_zone_id", referencedColumnName="id")
+     *   @orm:JoinColumn(name="dm_zone_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $dmZone;

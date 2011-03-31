@@ -45,7 +45,7 @@ class DmZone
      *
      * @orm:ManyToOne(targetEntity="DmArea")
      * @orm:JoinColumns({
-     *   @orm:JoinColumn(name="dm_area_id", referencedColumnName="id")
+     *   @orm:JoinColumn(name="dm_area_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $dmArea;

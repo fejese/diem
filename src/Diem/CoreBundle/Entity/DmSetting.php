@@ -5,9 +5,7 @@ namespace Diem\CoreBundle\Entity;
 /**
  * Diem\CoreBundle\Entity\DmSetting
  *
- * @orm:Table(name="dm_setting",uniqueConstraints={
- *  @orm:UniqueConstraint(name="name", columns={"name"})
- * })
+ * @orm:Table(name="dm_setting")
  * @orm:Entity
  */
 class DmSetting {
@@ -23,7 +21,7 @@ class DmSetting {
   /**
    * @var string $name
    *
-   * @orm:Column(name="name", type="string", length=127, nullable=false)
+   * @orm:Column(name="name", type="string", length=127, nullable=false, unique=true)
    */
   private $name;
   /**

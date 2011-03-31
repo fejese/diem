@@ -59,7 +59,7 @@ class DmTransUnit
      *
      * @orm:ManyToOne(targetEntity="DmCatalogue")
      * @orm:JoinColumns({
-     *   @orm:JoinColumn(name="dm_catalogue_id", referencedColumnName="id")
+     *   @orm:JoinColumn(name="dm_catalogue_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      * })
      */
     private $dmCatalogue;

@@ -55,10 +55,10 @@ class DmGroup
      * @orm:ManyToMany(targetEntity="DmPermission", inversedBy="dmGroup")
      * @orm:JoinTable(name="dm_group_permission",
      *   joinColumns={
-     *     @orm:JoinColumn(name="dm_group_id", referencedColumnName="id")
+     *     @orm:JoinColumn(name="dm_group_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      *   },
      *   inverseJoinColumns={
-     *     @orm:JoinColumn(name="dm_permission_id", referencedColumnName="id")
+     *     @orm:JoinColumn(name="dm_permission_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      *   }
      * )
      */

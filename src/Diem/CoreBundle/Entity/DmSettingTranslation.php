@@ -54,7 +54,7 @@ class DmSettingTranslation
      *
      * @orm:ManyToOne(targetEntity="DmSetting")
      * @orm:JoinColumns({
-     *   @orm:JoinColumn(name="dm_setting_id", referencedColumnName="id")
+     *   @orm:JoinColumn(name="dm_setting_id", referencedColumnName="id", nullable=false, onDelete="CASCADE", onUpdate="CASCADE")
      * })
      */
     private $dmSetting;

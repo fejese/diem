@@ -82,7 +82,7 @@ class DmAutoSeoTranslation
      *
      * @orm:ManyToOne(targetEntity="DmAutoSeo")
      * @orm:JoinColumns({
-     *   @orm:JoinColumn(name="dm_auto_seo_id", referencedColumnName="id")
+     *   @orm:JoinColumn(name="dm_auto_seo_id", referencedColumnName="id", nullable=false, onDelete="CASCADE", onUpdate="CASCADE")
      * })
      */
     private $dmAutoSeo;
