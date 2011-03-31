@@ -9,13 +9,20 @@ use Symfony\Component\Config\FileLocator;
 
 class DiemCoreBaseExtension extends Extension {
 
-  public function load(array $configs, ContainerBuilder $container) {
-//        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-//        $loader->load('services.yml');
-    //$this->setParameter('request.context',  $this->getService('request')->getRequestContext());
-    //\var_dump($container->get('service_container'));
+	protected $locations = array();
+	protected $files = array();
 
-    //$container->setParameter('user.culture', $container->get('service_container')->get('session')->get('culture'));
+	protected function addFileToLoad($location, $file) {
+		$this->location[] = $location;
+		$this->files[] = $file;
+	}
+
+	public function load(array $configs, ContainerBuilder $container) {
+		foreach ($this->files as $key=>$file) {
+			$location = $this->locations[$key];
+			$loader = new YamlFileLoader($container, new FileLocator($location));
+			$loader->load($file);
+		}
   }
 
 }
