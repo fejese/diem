@@ -28,8 +28,9 @@ class dmPageRouting extends dmConfigurable
    */
   public function find($slug, $culture = null)
   {
-    $culture = null === $culture ? $this->serviceContainer->get('session')->get('user.culture', 'en') : $culture;
-    
+    $culture = null === $culture ? $this->serviceContainer->get('request')->getSession()->getLocale() : $culture;
+    $culture = null === $culture ? 'en' : $culture;
+
     if(!$page = $this->findPageForCulture($slug, $culture))
     {
       $result = $this->findPageAndCultureForAnotherCulture($slug);
