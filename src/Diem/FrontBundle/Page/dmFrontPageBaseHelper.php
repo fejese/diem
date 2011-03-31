@@ -182,10 +182,9 @@ class dmFrontPageBaseHelper extends dmConfigurable
 
     list($prefix, $type) = explode('.', $name);
     
-    $options['class'] = array_merge(dmArray::get($options, 'class', array()), array(
-      'dm_area',
-      'dm_'.$prefix.'_'.$type
-    ));
+    $options['class'] = dmArray::get($options, 'class', array());
+    $options['class'][] = 'dm_area';
+    $options['class'][] = 'dm_'.$prefix.'_'.$type;
     
     $options['id'] = dmArray::get($options, 'id', 'dm_area_'.$area['id']);
 
