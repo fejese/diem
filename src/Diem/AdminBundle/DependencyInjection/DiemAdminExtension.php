@@ -10,7 +10,7 @@ use Diem\CoreBundle\DependencyInjection\DiemCoreBaseExtension;
 class DiemAdminExtension extends DiemCoreBaseExtension
 {
 		public function __construct() {
-			$this->addFileToLoadp(__DIR__.'/../Resources/config', 'services.yml');
+			$this->addFileToLoad(__DIR__.'/../Resources/config', 'services.yml');
 		}
 
     public function getAlias()

@@ -16,6 +16,7 @@ class AppKernel extends Kernel
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
 	    new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+	    new Knplabs\Bundle\ConsoleAutocompleteBundle\KnplabsConsoleAutocompleteBundle(),
 	    new FOS\UserBundle\FOSUserBundle(),
             new Diem\CoreBundle\DiemCoreBundle(),
             new Diem\AdminBundle\DiemAdminBundle(),

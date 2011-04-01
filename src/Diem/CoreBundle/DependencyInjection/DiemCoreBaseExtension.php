@@ -13,7 +13,7 @@ class DiemCoreBaseExtension extends Extension {
 	protected $files = array();
 
 	protected function addFileToLoad($location, $file) {
-		$this->location[] = $location;
+		$this->locations[] = $location;
 		$this->files[] = $file;
 	}
 

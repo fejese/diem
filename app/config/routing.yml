@@ -9,3 +9,9 @@
 diem:
     resource: "@DiemFront/Resources/config/routing.yml"
 
+fos_user_security:
+    resource: @FOSUser/Resources/config/routing/security.xml
+
+fos_user_user:
+    resource: @FOSUser/Resources/config/routing/user.xml
+    prefix: /user

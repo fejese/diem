@@ -48,3 +48,6 @@
 [submodule "vendor/bundles/FOS/UserBundle"]
 	path = vendor/bundles/FOS/UserBundle
 	url = git://github.com/FriendsOfSymfony/UserBundle.git
+[submodule "vendor/bundles/Knplabs/Bundle/ConsoleAutocompleteBundle"]
+	path = vendor/bundles/Knplabs/Bundle/ConsoleAutocompleteBundle
+	url = https://github.com/knplabs/ConsoleAutocompleteBundle.git

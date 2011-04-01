@@ -17,6 +17,7 @@ $loader->registerNamespaces(array(
     'Zend'                           => __DIR__.'/../vendor/symfony/vendor/zend/library',
     'Assetic'                        => __DIR__.'/../vendor/symfony/vendor/assetic/src',
     'FOS' => __DIR__.'/../vendor/bundles',
+    'Knplabs' => __DIR__.'/../vendor/bundles',
     'Acme'                           => __DIR__.'/../src',
     'Diem'                           => __DIR__.'/../src',
 ));

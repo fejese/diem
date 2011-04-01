@@ -43,6 +43,7 @@ doctrine:
         entity_managers:
             default:
                 mappings:
+                    FOSUser: ~
                     DiemCore: ~
 
 # Swiftmailer Configuration
@@ -51,3 +52,28 @@ swiftmailer:
     host:       %mailer_host%
     username:   %mailer_user%
     password:   %mailer_password%
+
+
+security:
+    providers:
+        # the naming of a security provider is up to you, we chose "fos_userbundle"
+        fos_userbundle:
+            id: fos_user.user_manager
+    firewalls:
+        main:
+            pattern:      .*
+            form-login:
+                provider:       fos_userbundle
+                login_path:     /login
+                use_forward:    false
+                check_path:     /login_check
+                failure_path:   null
+            logout:       true
+            anonymous:    true
+
+fos_user:
+    db_driver: orm
+    provider_key: main
+    class:
+        model:
+            user: Diem\CoreBundle\Entity\User
