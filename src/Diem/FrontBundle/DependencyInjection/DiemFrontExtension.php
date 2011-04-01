@@ -7,14 +7,14 @@ use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Config\FileLocator;
 use Diem\CoreBundle\DependencyInjection\DiemCoreBaseExtension;
 
-class DiemFrontExtension extends DiemCoreBaseExtension
-{
-		public function __construct() {
-			$this->addFileToLoad(__DIR__.'/../Resources/config', 'services.yml');
-		}
+class DiemFrontExtension extends DiemCoreBaseExtension {
 
-    public function getAlias()
-    {
+    public function __construct() {
+        $this->addFilesToLoad(__DIR__ . '/../Resources/config', array('services.yml', 'config.yml'));
+    }
+
+    public function getAlias() {
         return 'diem_front';
     }
+
 }

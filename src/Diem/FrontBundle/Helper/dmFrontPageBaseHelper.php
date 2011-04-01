@@ -1,8 +1,8 @@
 <?php
 
-namespace Diem\FrontBundle\Page;
-
-use Diem\CoreBundle\Core\dmConfigurable;
+//namespace Diem\FrontBundle\Page;
+//
+//use Diem\CoreBundle\Core\dmConfigurable;
 
 class dmFrontPageBaseHelper extends dmConfigurable
 {

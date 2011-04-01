@@ -12,21 +12,19 @@
         Hello World!
       </p>
     </div>
-    {#
-    <?php echo $helper->renderArea('layout.top', '.clearfix') ?>
+    
+    {% render "DiemFront:Helper:renderArea" with {'name': 'layout.top'} %}
 
     <div class="dm_layout_center clearfix">
+      {% render "DiemFront:Helper:renderArea" with {'name': 'layout.left'} %}
 
-      <?php echo $helper->renderArea('layout.left') ?>
-
-      <?php echo $helper->renderArea('page.content') ?>
-
-      <?php echo $helper->renderArea('layout.right') ?>
-
+      {% render "DiemFront:Helper:renderArea" with {'name': 'layout.content'} %}
+      
+      {% render "DiemFront:Helper:renderArea" with {'name': 'layout.right'} %}
     </div>
 
-    <?php echo $helper->renderArea('layout.bottom', '.clearfix') ?>
-    #}
+    {% render "DiemFront:Helper:renderArea" with {'name': 'layout.bottom'} %}
+    
   </div>
 
 </div>

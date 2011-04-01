@@ -9,20 +9,19 @@ use Symfony\Component\Config\FileLocator;
 
 class DiemCoreBaseExtension extends Extension {
 
-	protected $locations = array();
-	protected $files = array();
+    protected $locations = array();
 
-	protected function addFileToLoad($location, $file) {
-		$this->locations[] = $location;
-		$this->files[] = $file;
-	}
+    protected function addFilesToLoad($location, array $files) {
+        $this->locations[$location] = $files;
+    }
 
-	public function load(array $configs, ContainerBuilder $container) {
-		foreach ($this->files as $key=>$file) {
-			$location = $this->locations[$key];
-			$loader = new YamlFileLoader($container, new FileLocator($location));
-			$loader->load($file);
-		}
-  }
+    public function load(array $configs, ContainerBuilder $container) {
+        foreach ($this->locations as $location => $files) {
+            $loader = new YamlFileLoader($container, new FileLocator($location));
+            foreach ($files as $file) {
+                $loader->load($file);
+            }
+        }
+    }
 
 }
