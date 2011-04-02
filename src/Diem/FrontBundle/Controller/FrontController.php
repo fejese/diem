@@ -5,6 +5,9 @@ namespace Diem\FrontBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use DoctrineExtensions\NestedSet\Manager;
+use DoctrineExtensions\NestedSet\Config;
+use Diem\CoreBundle\Entity\DmZone;
 
 class FrontController extends BaseFrontController {
 
@@ -13,80 +16,82 @@ class FrontController extends BaseFrontController {
 //        return $this->render('DiemFrontBundle:Default:index.html.twig');
 //    }
 
-  public function pageAction($slug, $dm_page = null) {
-    $this->page = $this->getPageFromRequest($slug, $dm_page);
 
-    //$this->secure();  // TODO: uncomment and implement
+    public function pageAction($slug, $dm_page = null) {
+        $this->page = $this->getPageFromRequest($slug, $dm_page);
 
-    return $this->renderPage();
-  }
+        //$this->secure();  // TODO: uncomment and implement
 
-  protected function getPageFromRequest($slug, $dmPage) {
-    if ($dmPage) {
-      if (is_string($dmPage)) {
-        $this->forward404Unless($dmPage = dmDb::table('DmPage')->findOneBySource($dmPage));
-      }
-
-      return $dmPage;
+        return $this->renderPage();
     }
 
-    // find matching page_route for this slug
-    $pageRoute = $this->get('page_routing')->find($slug);
+    protected function getPageFromRequest($slug, $dmPage) {
+        if ($dmPage) {
+            if (is_string($dmPage)) {
+                $this->forward404Unless($dmPage = dmDb::table('DmPage')->findOneBySource($dmPage));
+            }
 
-    if ($pageRoute) {
-      $page = $pageRoute->getPage();
+            return $dmPage;
+        }
 
-      // found a page on another culture
-      if ($pageRoute->getCulture() !== $this->get('session')->get('culture')) {
-        $this->get('session')->set('culture', $pageRoute->getCulture());
-      }
+        // find matching page_route for this slug
+        $pageRoute = $this->get('page_routing')->find($slug);
+
+        if ($pageRoute) {
+            $page = $pageRoute->getPage();
+
+            // found a page on another culture
+            $session = $this->get('request')->getSession();
+            if ($pageRoute->getCulture() !== $session->getLocale()) {
+                $session->setLocale($pageRoute->getCulture());
+            }
+        }
+        // the page does not exist
+        else {
+            // if page_not_found_handler suggest a redirection
+            if ($redirectionUrl = $this->get('page_not_found_handler')->getRedirection($slug)) {
+                return $this->redirect($redirectionUrl, 301);
+            }
+
+            // else use main.error404 page
+            $page = dmDb::table('DmPage')->fetchError404();
+        }
+
+        return $page;
     }
-    // the page does not exist
-    else {
-      // if page_not_found_handler suggest a redirection
-      if ($redirectionUrl = $this->get('page_not_found_handler')->getRedirection($slug)) {
-        return $this->redirect($redirectionUrl, 301);
-      }
 
-      // else use main.error404 page
-      $page = dmDb::table('DmPage')->fetchError404();
+    protected function secure() {
+        $user = $this->getUser();
+
+        $accessDenied =
+                // the site is not active and requires the site_view permission to be displayed
+                (!dmConfig::get('site_active') && !$user->can('site_view'))
+                // the page is not active and requires the site_view permission to be displayed
+                || (!$this->page->get('is_active') && !$user->can('site_view'))
+                // the page is secured and requires authentication to be displayed
+                || ($this->page->get('is_secure') && !$user->isAuthenticated())
+                // the page is secured and the user has not required credentials
+                || ($this->page->get('is_secure') && $this->page->get('credentials') && !$user->can($this->page->get('credentials')))
+        ;
+
+        $accessDenied = $this->getDispatcher()->filter(
+                        new sfEvent($this, 'dm.page.deny_access', array('page' => $this->page, 'context' => $this->context)),
+                        $accessDenied
+                )->getReturnValue();
+
+        if ($accessDenied) {
+            if (!$this->page->get('is_active')) {
+                $this->forward404();
+            }
+
+            // use main/signin page
+            $this->getRequest()->setParameter('dm_page', dmDb::table('DmPage')->fetchSignin());
+
+            $this->getResponse()->setStatusCode($user->isAuthenticated() ? 403 : 401);
+
+            $this->forward('dmFront', 'page');
+        }
     }
-
-    return $page;
-  }
-
-  protected function secure() {
-    $user = $this->getUser();
-
-    $accessDenied =
-            // the site is not active and requires the site_view permission to be displayed
-            (!dmConfig::get('site_active') && !$user->can('site_view'))
-            // the page is not active and requires the site_view permission to be displayed
-            || (!$this->page->get('is_active') && !$user->can('site_view'))
-            // the page is secured and requires authentication to be displayed
-            || ($this->page->get('is_secure') && !$user->isAuthenticated())
-            // the page is secured and the user has not required credentials
-            || ($this->page->get('is_secure') && $this->page->get('credentials') && !$user->can($this->page->get('credentials')))
-    ;
-
-    $accessDenied = $this->getDispatcher()->filter(
-                    new sfEvent($this, 'dm.page.deny_access', array('page' => $this->page, 'context' => $this->context)),
-                    $accessDenied
-            )->getReturnValue();
-
-    if ($accessDenied) {
-      if (!$this->page->get('is_active')) {
-        $this->forward404();
-      }
-
-      // use main/signin page
-      $this->getRequest()->setParameter('dm_page', dmDb::table('DmPage')->fetchSignin());
-
-      $this->getResponse()->setStatusCode($user->isAuthenticated() ? 403 : 401);
-
-      $this->forward('dmFront', 'page');
-    }
-  }
 
 //  public function executeError404(dmWebRequest $request)
 //  {
@@ -95,83 +100,128 @@ class FrontController extends BaseFrontController {
 //    return $this->renderPage();
 //  }
 //
-  protected function renderPage() {
-    // share current page
-    //$this->context->setPage($this->page);
+    protected function renderPage() {
+        // share current page
+        //$this->context->setPage($this->page);
 
-    $response = new Response();
+        $response = new Response();
 
-    if ($this->page->isModuleAction('main', 'error404')) {
-      //$this->response->setStatusCode(404);
-      $response = new Response('', 404);
-    }
+        if ($this->page->isModuleAction('main', 'error404')) {
+            //$this->response->setStatusCode(404);
+            $response = new Response('', 404);
+        }
 
-    //$pageView = $this->page->getDmPageView();
-    $template = $this->page->getTemplate();
+        //$pageView = $this->page->getDmPageView();
+        $template = $this->page->getTemplate();
 //var_dump($template);
 //    $this->setTemplate($template, 'dmFront');
 //
 //    $this->setLayout(sfConfig::get('sf_root_dir').'/apps/front/modules/dmFront/templates/layout');
 //
-    //$template_vars['helper'] = $this->get('page_helper');
+//    $this->helper = $this->getService('page_helper');
 //
 //    $this->isEditMode = $this->getUser()->getIsEditMode();
-    $template_vars['isEditMode'] = false;
+//
+//    $this->launchDirectActions();
 
-    //$this->launchDirectActions();
 
-    return $this->render('DiemFront:Layout:' . $template . '.html.twig', $template_vars);
-  }
+        $nsm = new Manager(new Config($this->get('doctrine.orm.entity_manager'), 'Diem\CoreBundle\Entity\DmZone'));
 
-  /*
-   * If an sfAction exists for the current page module.action,
-   * it will be executed
-   * If some sfActions exist for the current widgets module.action,
-   * they will be executed to
-   */
+        $zone = new DmZone();
 
-  protected function launchDirectActions() {
-    $moduleManager = $this->context->getModuleManager();
+        $rootNode = $nsm->fetchTree(1);
 
-    $moduleActions = array();
+//$rootNode->getFirstChild()->addChild(new DmZone());
+//$rootNode->getFirstChild()->addChild(new DmZone());
+//$rootNode->addChild(new DmZone());
 
-    // Add module action for page
-    if ($moduleManager->hasModule($this->page->get('module'))) {
-      $moduleActions[] = $this->page->getModuleAction() . 'Page';
+        $renderedZones = $this->renderNodeRecursive($rootNode);
+
+        //var_dump($renderedZones);
+//        $nsm->persist();
+//        $nsm->flush();
+
+
+        return $this->render('DiemFront:Layout:' . $template . '.html.twig', array('isEditMode' => true, 'zones' => $renderedZones));
     }
 
-    // Find module/action for page widgets ( including layout )
-    foreach ($this->helper->getAreas() as $areaArray) {
-      foreach ($areaArray['Zones'] as $zoneArray) {
-        foreach ($zoneArray['Widgets'] as $widgetArray) {
-          if ($moduleManager->hasModule($widgetArray['module'])) {
-            $widgetModuleAction = $widgetArray['module'] . '/' . $widgetArray['action'] . 'Widget';
+    private function renderNodeRecursive($node) {
+        //$ret = '<div class="dm_zone">';
 
-            if (!in_array($widgetModuleAction, $moduleActions)) {
-              $moduleActions[] = $widgetModuleAction;
-            }
-          }
+        $innerZones = '';
+        foreach ($node->getChildren() as $child) {
+            $innerZones .=  $this->renderNodeRecursive($child);
         }
-      }
+        $ret = $this->renderNode($node, $innerZones);
+        return $ret;
     }
 
-    foreach ($moduleActions as $moduleAction) {
-      list($module, $action) = explode('/', $moduleAction);
-
-      if ($this->getController()->actionExists($module, $action)) {
-        $actionToRun = 'execute' . ucfirst($action);
-
-        try {
-          $this->getController()->getAction($module, $action)->preExecute();
-          $this->getController()->getAction($module, $action)->$actionToRun($this->getRequest());
-          $this->getController()->getAction($module, $action)->postExecute();
-        } catch (sfControllerException $e) {
-          $this->getContext()->getLogger()->warning(sprintf('The %s/%s direct action does not exist', $module, $action));
-        }
-      }
+    private function renderNode($node, $innerZones) {
+        return $this->renderView('DiemFront:Helper:zone.html.twig',
+                array('node' => $node, 'innerZones' => $innerZones,));
     }
-  }
 
+//
+//  /*
+//   * If an sfAction exists for the current page module.action,
+//   * it will be executed
+//   * If some sfActions exist for the current widgets module.action,
+//   * they will be executed to
+//   */
+//  protected function launchDirectActions()
+//  {
+//    $moduleManager = $this->context->getModuleManager();
+//
+//    $moduleActions = array();
+//
+//    // Add module action for page
+//    if($moduleManager->hasModule($this->page->get('module')))
+//    {
+//      $moduleActions[] = $this->page->getModuleAction().'Page';
+//    }
+//
+//    // Find module/action for page widgets ( including layout )
+//    foreach($this->helper->getAreas() as $areaArray)
+//    {
+//      foreach($areaArray['Zones'] as $zoneArray)
+//      {
+//        foreach($zoneArray['Widgets'] as $widgetArray)
+//        {
+//          if($moduleManager->hasModule($widgetArray['module']))
+//          {
+//            $widgetModuleAction = $widgetArray['module'].'/'.$widgetArray['action'].'Widget';
+//
+//            if(!in_array($widgetModuleAction, $moduleActions))
+//            {
+//              $moduleActions[] = $widgetModuleAction;
+//            }
+//          }
+//        }
+//      }
+//    }
+//
+//    foreach($moduleActions as $moduleAction)
+//    {
+//      list($module, $action) = explode('/', $moduleAction);
+//
+//      if ($this->getController()->actionExists($module, $action))
+//      {
+//        $actionToRun = 'execute'.ucfirst($action);
+//
+//        try
+//        {
+//            $this->getController()->getAction($module, $action)->preExecute();
+//            $this->getController()->getAction($module, $action)->$actionToRun($this->getRequest());
+//            $this->getController()->getAction($module, $action)->postExecute();
+//        }
+//        catch(sfControllerException $e)
+//        {
+//          $this->getContext()->getLogger()->warning(sprintf('The %s/%s direct action does not exist', $module, $action));
+//        }
+//      }
+//    }
+//  }
+//
 //  public function executeEditToggle(sfWebRequest $request)
 //  {
 //    $this->getUser()->setIsEditMode($request->getParameter('active'));

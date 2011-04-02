@@ -15,7 +15,7 @@ class DmRememberKey
      *
      * @orm:Column(name="ip_address", type="string", length=50, nullable=false)
      * @orm:Id
-     * @orm:GeneratedValue(strategy="IDENTITY")
+     * @orm:GeneratedValue(strategy="AUTO")
      */
     private $ipAddress = '';
 

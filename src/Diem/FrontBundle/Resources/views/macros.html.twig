@@ -1,0 +1,7 @@
+{% macro open(tag_name, class, id) %}
+<{{ tag_name }}{%if id %} id="{{id}}"{% endif %}{%if class %} class="{{class}}"{% endif %}>
+{% endmacro %}
+
+{% macro close(tag_name) %}
+</{{ tag_name }}>
+{% endmacro %}

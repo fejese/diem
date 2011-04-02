@@ -15,7 +15,7 @@ class User extends BaseUser {
   /**
    * @orm:Id
    * @orm:Column(type="integer")
-   * @orm:generatedValue(strategy="IDENTITY")
+   * @orm:GeneratedValue(strategy="AUTO")
    */
   protected $id;
 

@@ -15,7 +15,7 @@ class DmWidget
      *
      * @orm:Column(name="id", type="bigint", nullable=false)
      * @orm:Id
-     * @orm:GeneratedValue(strategy="IDENTITY")
+     * @orm:GeneratedValue(strategy="AUTO")
      */
     private $id;
 

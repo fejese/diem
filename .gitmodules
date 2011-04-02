@@ -51,3 +51,6 @@
 [submodule "vendor/bundles/Knplabs/Bundle/ConsoleAutocompleteBundle"]
 	path = vendor/bundles/Knplabs/Bundle/ConsoleAutocompleteBundle
 	url = https://github.com/knplabs/ConsoleAutocompleteBundle.git
+[submodule "vendor/doctrine2-nestedset"]
+	path = vendor/doctrine2-nestedset
+	url = git://github.com/blt04/doctrine2-nestedset.git

@@ -4,28 +4,13 @@
 {{ parent() }}
 <div id="dm_page"{% if isEditMode %} class="edit"{% endif %}>
 
-     <div class="dm_layout">
-    {% block area %}
-    {% endblock %}
-    <div class="dm_layout_center clearfix">
-      <p>
+     <p>
         Hello World!
-      </p>
-    </div>
-    
-    {% render "DiemFront:Helper:renderArea" with {'name': 'layout.top'} %}
+    </p>
 
-    <div class="dm_layout_center clearfix">
-      {% render "DiemFront:Helper:renderArea" with {'name': 'layout.left'} %}
 
-      {% render "DiemFront:Helper:renderArea" with {'name': 'layout.content'} %}
-      
-      {% render "DiemFront:Helper:renderArea" with {'name': 'layout.right'} %}
-    </div>
+    {{ zones|raw }}
 
-    {% render "DiemFront:Helper:renderArea" with {'name': 'layout.bottom'} %}
-    
-  </div>
 
 </div>
 

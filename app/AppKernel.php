@@ -3,10 +3,9 @@
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
 
-class AppKernel extends Kernel
-{
-    public function registerBundles()
-    {
+class AppKernel extends Kernel {
+
+    public function registerBundles() {
         $bundles = array(
             new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
@@ -14,10 +13,10 @@ class AppKernel extends Kernel
             new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
-	    new Symfony\Bundle\SecurityBundle\SecurityBundle(),
+            new Symfony\Bundle\SecurityBundle\SecurityBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-	    new Knplabs\Bundle\ConsoleAutocompleteBundle\KnplabsConsoleAutocompleteBundle(),
-	    new FOS\UserBundle\FOSUserBundle(),
+            new Knplabs\Bundle\ConsoleAutocompleteBundle\KnplabsConsoleAutocompleteBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
             new Diem\CoreBundle\DiemCoreBundle(),
             new Diem\AdminBundle\DiemAdminBundle(),
             new Diem\FrontBundle\DiemFrontBundle(),
@@ -32,13 +31,12 @@ class AppKernel extends Kernel
         return $bundles;
     }
 
-    public function registerContainerConfiguration(LoaderInterface $loader)
-    {
-        $loader->load(__DIR__.'/config/config_'.$this->getEnvironment().'.yml');
+    public function registerContainerConfiguration(LoaderInterface $loader) {
+        $loader->load(__DIR__ . '/config/config_' . $this->getEnvironment() . '.yml');
     }
 
-    public function registerRootDir()
-    {
+    public function registerRootDir() {
         return __DIR__;
     }
+
 }

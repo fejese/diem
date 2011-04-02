@@ -1,4 +1,6 @@
-<{{ tag_name }}{%if options.class %} class="{{options.class}}"{% endif %}>
+{% import "DiemFront::macros.html.twig" as tag %}
+
+{{ tag.open(tag_name, options.class, options.id) }}
 {% block zones %}
 {% endblock %}
-</{{ tag_name }}>
+{{ tag.close(tag_name) }}
