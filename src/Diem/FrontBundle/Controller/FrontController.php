@@ -16,6 +16,30 @@ class FrontController extends BaseFrontController {
 //        return $this->render('DiemFrontBundle:Default:index.html.twig');
 //    }
 
+    public function zoneMoveAction() {
+        //$this->get('request')->getParameter('');
+        $zone_id = $this->get('request')->get('zone_id');
+        $parent_zone_id = $this->get('request')->get('parent_zone_id');
+        $children_ids = $this->get('request')->get('dm_zone');
+
+        if ($zone_id && $parent_zone_id && is_array($children_ids) && count($children_ids)) {
+            $nsm = new Manager(new Config($this->get('doctrine.orm.entity_manager'), 'Diem\CoreBundle\Entity\DmZone'));
+
+            $zoneNode = $nsm->fetchBranch($zone_id, 1);
+            $parentNode = $nsm->fetchBranch($parent_zone_id, 2);
+            $existingChildren = $parentNode->getChildren();
+
+            $newChildPosition = array_search($zone_id, $children_ids);
+            //\var_dump($newChildPosition);
+            if ($newChildPosition == 0) {
+                $zoneNode->moveAsFirstChildOf($parentNode);
+            } else {
+                $zoneNode->moveAsNextSiblingOf($existingChildren[$newChildPosition - 1]);
+            }
+            return new Response('ok');
+        }
+        throw new Exception('Zone movement failed: not enough parameters.');
+    }
 
     public function pageAction($slug, $dm_page = null) {
         $this->page = $this->getPageFromRequest($slug, $dm_page);
@@ -127,8 +151,6 @@ class FrontController extends BaseFrontController {
 
         $nsm = new Manager(new Config($this->get('doctrine.orm.entity_manager'), 'Diem\CoreBundle\Entity\DmZone'));
 
-        $zone = new DmZone();
-
         $rootNode = $nsm->fetchTree(1);
 
 //$rootNode->getFirstChild()->addChild(new DmZone());
@@ -150,7 +172,7 @@ class FrontController extends BaseFrontController {
 
         $innerZones = '';
         foreach ($node->getChildren() as $child) {
-            $innerZones .=  $this->renderNodeRecursive($child);
+            $innerZones .= $this->renderNodeRecursive($child);
         }
         $ret = $this->renderNode($node, $innerZones);
         return $ret;
