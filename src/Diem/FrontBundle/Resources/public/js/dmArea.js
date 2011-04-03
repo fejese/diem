@@ -42,17 +42,9 @@ $.widget('ui.dmArea', {
         forceHelperSize:        true,
         forcePlaceholderSize:   false,
         tolerance:              'intersect',
-        receive:                function(e, ui) {
-sortEvents.receive = $(this).parent();
-},
-        over:                function(e, ui) {
-i = 1;
-},
-        change:                function(e, ui) {
-i = 1;
-},
-        remove:                 function(e, ui) { sortEvents.remove = true; },
-        update:                 function(e, ui) { sortEvents.update = true; },
+        update:                 function(e, ui) {
+            sortEvents.update = true;
+        },
         start:                  function(e, ui)
         {
           ui.item.addClass('dm_dragging');
@@ -82,6 +74,7 @@ i = 1;
         },
         stop:                   function(e, ui)
         {
+            
           if (sortEvents.update && sortEvents.receive && sortEvents.remove)
           {
             sortEvents.receive.dmArea('moveZone', ui.item);
@@ -92,7 +85,8 @@ i = 1;
           }
           else if (sortEvents.update)
           {
-            $(this).parent().dmArea('sortZones');
+            //$(this).parent().dmArea('sortZones');
+            $(this).parent().dmArea('moveZone', ui.item);
           }
           
           setTimeout(function() { ui.item.removeClass('dm_dragging'); }, 200);
@@ -106,10 +100,10 @@ i = 1;
   moveZone: function($zone)
   {
     $.ajax({
-      url: $.dm.ctrl.getHref('+/dmZone/move')
-      +"?moved_dm_zone="+$zone.dmZone('getId')
-      +"&to_dm_area="+this.getId()
-      +"&"+$('div.dm_zones', this.element).sortable('serialize')
+      url: $.dm.ctrl.getHref('+/DiemFront:Front:zoneMove/')
+      +"?zone_id="+$zone.dmArea('getId')
+      +"&parent_zone_id="+$zone.parent().parent().dmArea('getId')
+      +"&"+$('div.dm_zones', $zone.parent().parent()).sortable('serialize')
     });
   },
   
