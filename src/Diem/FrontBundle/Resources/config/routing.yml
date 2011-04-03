@@ -2,9 +2,12 @@
 # To change a page url, edit the page in the front office
 # Or use seo module in admin
 
-#default:
-#  url:          /+/:module/:action/*
-#
+
+
+default:
+    pattern:  /+/{_controller}/
+    requirements:
+        _controller: 'DiemFront:Front:zoneMove'
 #toAdmin:
 #  url:          /admin
 #  params:       { module: dmFront, action: toAdmin }

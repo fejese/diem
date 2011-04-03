@@ -19,5 +19,5 @@ echo "Full backup start" && \
   mysqldump $BU_DB -u $BU_USER -p > $BU_DIR$BU_NAME.sql && \
   echo "  Full backup done" && \
 echo "Data-only backup start" && \
-  mysqldump $BU_DB -nt -u $BU_USER -p > $BU_DIR$BU_NAME-data-only.sql
-
+  mysqldump $BU_DB -nt -u $BU_USER -p > $BU_DIR$BU_NAME-data-only.sql && \
+echo "All done! :)"

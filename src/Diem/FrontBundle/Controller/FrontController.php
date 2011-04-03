@@ -16,6 +16,11 @@ class FrontController extends BaseFrontController {
 //        return $this->render('DiemFrontBundle:Default:index.html.twig');
 //    }
 
+    public function zoneMoveAction() {
+        //$this->get('request')->getParameter('');
+var_dump($this->get('request')->get('arg'));
+        //return $this->renderPage();
+    }
 
     public function pageAction($slug, $dm_page = null) {
         $this->page = $this->getPageFromRequest($slug, $dm_page);

@@ -26,7 +26,7 @@ body
     width: 100%;
 }
 
-#dm_page.edit .dm_zone .dm_widgets {
+#dm_page.edit .dm_zone .dm_zones, #dm_page.edit .dm_zone .dm_widgets {
     min-height: 40px;
     border: 2px groove #fff;
     overflow: hidden;
@@ -34,11 +34,6 @@ body
     border-radius: 0 4px 4px 4px;
     -moz-border-radius: 0 4px 4px 4px;
     -webkit-border-radius: 0 4px 4px 4px;
-}
-
-
-#dm_page.edit .dm_zone_edit:hover + .dm_widgets {
-    border-color: #a6eded;
 }
 
 
@@ -57,8 +52,16 @@ body
     cursor: pointer;
 }
 
-
+#dm_page.edit .dm_zone_edit:hover + .dm_zones, #dm_page.edit .dm_zone_edit:hover + .dm_widgets {
+    border-color: #a6eded;
+}
 
 #dm_page.edit .dm_zone .dm_zone_edit:hover  {
     background-position: 0 -57px;
+}
+
+.dm_zone_placeholder {
+    float: left;
+    margin: 3px;
+    opacity: 0.5;
 }
