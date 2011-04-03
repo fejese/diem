@@ -1,0 +1,8 @@
+
+<div class="dm_zone{%if node.node.cssClass %} {{node.node.cssClass}}{% endif %}{%if node.isRoot %} root_node{% endif %}"{%if node.node.width %} style="width:{{node.node.width}}"{% endif %}>
+     <a class="dm_zone_edit" title="Edit this zone"></a>
+    <div class="dm_widgets">
+     {{ node.node.cssClass }}
+     {{ innerZones|raw }}
+    </div>
+</div>

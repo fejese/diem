@@ -1,24 +1,56 @@
-[submodule "dmCorePlugin/plugins/sfImageTransformPlugin"]
-	path = dmCorePlugin/plugins/sfImageTransformPlugin
-	url = git://github.com/diem-project/sfImageTransformPlugin.git
-[submodule "dmCorePlugin/plugins/sfWebBrowserPlugin"]
-	path = dmCorePlugin/plugins/sfWebBrowserPlugin
-	url = git://github.com/diem-project/sfWebBrowserPlugin.git
-[submodule "dmCorePlugin/plugins/sfFeed2Plugin"]
-	path = dmCorePlugin/plugins/sfFeed2Plugin
-	url = git://github.com/diem-project/sfFeed2Plugin.git
-[submodule "dmCorePlugin/plugins/sfFormExtraPlugin"]
-	path = dmCorePlugin/plugins/sfFormExtraPlugin
-	url = git://github.com/diem-project/sfFormExtraPlugin.git
-[submodule "symfony"]
-	path = symfony
-	url = git://github.com/vjousse/symfony-1.4.git
-[submodule "dmCorePlugin/test/project/plugins/dmTagPlugin"]
-	path = dmCorePlugin/test/project/plugins/dmTagPlugin
-	url = git://github.com/diem-project/dmTagPlugin.git
-[submodule "dmCorePlugin/lib/vendor/php-html-writer"]
-	path = dmCorePlugin/lib/vendor/php-html-writer
-	url = git://github.com/ornicar/php-html-writer.git
-[submodule "dmCorePlugin/lib/vendor/php-user-agent"]
-	path = dmCorePlugin/lib/vendor/php-user-agent
-	url = git://github.com/ornicar/php-user-agent
+[submodule "vendor/symfony"]
+	path = vendor/symfony
+	url = git://github.com/symfony/symfony.git
+
+[submodule "vendor/assetic"]
+	path = vendor/assetic
+	url = git://github.com/kriswallsmith/assetic.git
+
+[submodule "vendor/doctrine"]
+	path = vendor/doctrine
+	url = git://github.com/doctrine/doctrine2.git
+
+[submodule "vendor/doctrine-data-fixtures"]
+	path = vendor/doctrine-data-fixtures
+	url = git://github.com/doctrine/data-fixtures.git
+
+[submodule "vendor/doctrine-dbal"]
+	path = vendor/doctrine-dbal
+	url = git://github.com/doctrine/dbal.git
+
+[submodule "vendor/doctrine-common"]
+	path = vendor/doctrine-common
+	url = git://github.com/doctrine/common.git
+
+[submodule "vendor/doctrine-migrations"]
+	path = vendor/doctrine-migrations
+	url = git://github.com/doctrine/migrations.git
+
+[submodule "vendor/swiftmailer"]
+	path = vendor/swiftmailer
+	url = git://github.com/swiftmailer/swiftmailer.git
+
+[submodule "vendor/twig"]
+	path = vendor/twig
+	url = git://github.com/fabpot/Twig.git
+
+[submodule "vendor/zend"]
+	path = vendor/zend
+	url = git://github.com/zendframework/zf2.git
+
+[submodule "vendor/bundles/Sensio/Bundle/FrameworkExtraBundle"]
+	path = vendor/bundles/Sensio/Bundle/FrameworkExtraBundle
+	url = git://github.com/sensio/SensioFrameworkExtraBundle.git
+
+[submodule "vendor/bundles/Symfony/Bundle/WebConfiguratorBundle"]
+	path = vendor/bundles/Symfony/Bundle/WebConfiguratorBundle
+	url = git://github.com/symfony/WebConfiguratorBundle.git
+[submodule "vendor/bundles/FOS/UserBundle"]
+	path = vendor/bundles/FOS/UserBundle
+	url = git://github.com/FriendsOfSymfony/UserBundle.git
+[submodule "vendor/bundles/Knplabs/Bundle/ConsoleAutocompleteBundle"]
+	path = vendor/bundles/Knplabs/Bundle/ConsoleAutocompleteBundle
+	url = https://github.com/knplabs/ConsoleAutocompleteBundle.git
+[submodule "vendor/doctrine2-nestedset"]
+	path = vendor/doctrine2-nestedset
+	url = git://github.com/blt04/doctrine2-nestedset.git

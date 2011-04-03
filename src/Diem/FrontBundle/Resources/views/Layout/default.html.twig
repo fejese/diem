@@ -1,0 +1,17 @@
+{% extends "DiemFront::layout.html.twig" %}
+
+{% block content %}
+{{ parent() }}
+<div id="dm_page"{% if isEditMode %} class="edit"{% endif %}>
+
+     <p>
+        Hello World!
+    </p>
+
+
+    {{ zones|raw }}
+
+
+</div>
+
+{% endblock %}
