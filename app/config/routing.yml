@@ -7,11 +7,11 @@
 #    defaults: { _controller: FrameworkBundle:Default:index }
 
 diem:
-    resource: "@DiemFront/Resources/config/routing.yml"
+    resource: "@DiemFrontBundle/Resources/config/routing.yml"
 
 fos_user_security:
-    resource: @FOSUser/Resources/config/routing/security.xml
+    resource: @FOSUserBundle/Resources/config/routing/security.xml
 
 fos_user_user:
-    resource: @FOSUser/Resources/config/routing/user.xml
+    resource: @FOSUserBundle/Resources/config/routing/user.xml
     prefix: /user

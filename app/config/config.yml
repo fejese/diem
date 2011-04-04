@@ -43,8 +43,8 @@ doctrine:
         entity_managers:
             default:
                 mappings:
-                    FOSUser: ~
-                    DiemCore: ~
+                    FOSUserBundle: ~
+                    DiemCoreBundle: ~
 
 # Swiftmailer Configuration
 swiftmailer:

@@ -100,7 +100,7 @@ $.widget('ui.dmArea', {
   moveZone: function($zone)
   {
     $.ajax({
-      url: $.dm.ctrl.getHref('+/DiemFront:Front:zoneMove/')
+      url: $.dm.ctrl.getHref('+/DiemFrontBundle:Front:zoneMove/')
       +"?zone_id="+$zone.dmArea('getId')
       +"&parent_zone_id="+$zone.parent().parent().dmArea('getId')
       +"&"+$('div.dm_zones', $zone.parent().parent()).sortable('serialize')
