@@ -49,6 +49,49 @@ class FrontController extends BaseFrontController {
         return $this->renderPage();
     }
 
+    protected function renderPage() {
+        // share current page
+        //$this->context->setPage($this->page);
+
+        $response = new Response();
+
+        if ($this->page->isModuleAction('main', 'error404')) {
+            //$this->response->setStatusCode(404);
+            $response = new Response('', 404);
+        }
+
+        //$pageView = $this->page->getDmPageView();
+        $template = $this->page->getTemplate();
+//var_dump($template);
+//    $this->setTemplate($template, 'dmFront');
+//
+//    $this->setLayout(sfConfig::get('sf_root_dir').'/apps/front/modules/dmFront/templates/layout');
+//
+//    $this->helper = $this->getService('page_helper');
+//
+//    $this->isEditMode = $this->getUser()->getIsEditMode();
+//
+//    $this->launchDirectActions();
+
+
+        $nsm = new Manager(new Config($this->get('doctrine.orm.entity_manager'), 'Diem\CoreBundle\Entity\DmZone'));
+
+        $rootNode = $nsm->fetchTree(1);
+
+//$rootNode->getFirstChild()->addChild(new DmZone());
+//$rootNode->getFirstChild()->addChild(new DmZone());
+//$rootNode->addChild(new DmZone());
+
+        $renderedZones = $this->renderNodeRecursive($rootNode);
+
+        //var_dump($renderedZones);
+//        $nsm->persist();
+//        $nsm->flush();
+
+
+        return $this->render('DiemFrontBundle:Layout:' . $template . '.html.twig', array('isEditMode' => true, 'zones' => $renderedZones));
+    }
+
     protected function getPageFromRequest($slug, $dmPage) {
         if ($dmPage) {
             if (is_string($dmPage)) {
@@ -124,48 +167,6 @@ class FrontController extends BaseFrontController {
 //    return $this->renderPage();
 //  }
 //
-    protected function renderPage() {
-        // share current page
-        //$this->context->setPage($this->page);
-
-        $response = new Response();
-
-        if ($this->page->isModuleAction('main', 'error404')) {
-            //$this->response->setStatusCode(404);
-            $response = new Response('', 404);
-        }
-
-        //$pageView = $this->page->getDmPageView();
-        $template = $this->page->getTemplate();
-//var_dump($template);
-//    $this->setTemplate($template, 'dmFront');
-//
-//    $this->setLayout(sfConfig::get('sf_root_dir').'/apps/front/modules/dmFront/templates/layout');
-//
-//    $this->helper = $this->getService('page_helper');
-//
-//    $this->isEditMode = $this->getUser()->getIsEditMode();
-//
-//    $this->launchDirectActions();
-
-
-        $nsm = new Manager(new Config($this->get('doctrine.orm.entity_manager'), 'Diem\CoreBundle\Entity\DmZone'));
-
-        $rootNode = $nsm->fetchTree(1);
-
-//$rootNode->getFirstChild()->addChild(new DmZone());
-//$rootNode->getFirstChild()->addChild(new DmZone());
-//$rootNode->addChild(new DmZone());
-
-        $renderedZones = $this->renderNodeRecursive($rootNode);
-
-        //var_dump($renderedZones);
-//        $nsm->persist();
-//        $nsm->flush();
-
-
-        return $this->render('DiemFront:Layout:' . $template . '.html.twig', array('isEditMode' => true, 'zones' => $renderedZones));
-    }
 
     private function renderNodeRecursive($node) {
         //$ret = '<div class="dm_zone">';
@@ -179,7 +180,7 @@ class FrontController extends BaseFrontController {
     }
 
     private function renderNode($node, $innerZones) {
-        return $this->renderView('DiemFront:Helper:zone.html.twig',
+        return $this->renderView('DiemFrontBundle:Helper:zone.html.twig',
                 array('node' => $node, 'innerZones' => $innerZones,));
     }
 

@@ -7,7 +7,7 @@
 default:
     pattern:  /+/{_controller}/
     requirements:
-        _controller: 'DiemFront:Front:zoneMove'
+        _controller: 'DiemFrontBundle:Front:zoneMove'
 #toAdmin:
 #  url:          /admin
 #  params:       { module: dmFront, action: toAdmin }
@@ -38,4 +38,4 @@ default:
 
 homepage:
     pattern:  /
-    defaults: { _controller: DiemFront:Front:page, slug: '' }
+    defaults: { _controller: DiemFrontBundle:Front:page, slug: '' }

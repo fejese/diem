@@ -271,10 +271,10 @@ abstract class Bundle extends ContainerAware implements BundleInterface
     }
     public function build(ContainerBuilder $container)
     {
-        $class = $this->getNamespace().'\\DependencyInjection\\'.$this->getName().'Extension';
+        $class = $this->getNamespace().'\\DependencyInjection\\'.str_replace('Bundle', 'Extension', $this->getName());
         if (class_exists($class)) {
             $extension = new $class();
-            $alias = Container::underscore($this->getName());
+            $alias = Container::underscore(str_replace('Bundle', '', $this->getName()));
             if ($alias !== $extension->getAlias()) {
                 throw new \LogicException(sprintf('The extension alias for the default extension of a bundle must be the underscored version of the bundle name ("%s" vs "%s")', $alias, $extension->getAlias()));
             }
@@ -304,12 +304,9 @@ abstract class Bundle extends ContainerAware implements BundleInterface
         if (null !== $this->name) {
             return $this->name;
         }
-        $fqcn = get_class($this);
-        $name = false === ($pos = strrpos($fqcn, '\\')) ? $fqcn : substr($fqcn, $pos + 1);
-        if ('Bundle' != substr($name, -6)) {
-            throw new \RuntimeException(sprintf('The bundle class name "%s" must end with "Bundle" to be valid.', $name));
-        }
-        return $this->name = substr($name, 0, -6);
+        $name = get_class($this);
+        $pos = strrpos($name, '\\');
+        return $this->name = false === $pos ? $name :  substr($name, $pos + 1);
     }
     public function registerCommands(Application $application)
     {
@@ -452,7 +449,11 @@ class HttpKernel implements HttpKernelInterface
         if (!$event->hasResponse()) {
             throw $e;
         }
-        return $this->filterResponse($event->getResponse(), $request, $type);
+        try {
+            return $this->filterResponse($event->getResponse(), $request, $type);
+        } catch (\Exception $e) {
+            return $event->getResponse();
+        }
     }
     private function varToString($var)
     {
@@ -1933,7 +1934,7 @@ class UniversalClassLoader
             require $file;
         }
     }
-    protected function findFile($class)
+    public function findFile($class)
     {
         if ('\\' == $class[0]) {
             $class = substr($class, 1);
@@ -1998,6 +1999,15 @@ class MapFileClassLoader
         }
         if (isset($this->map[$class])) {
             require $this->map[$class];
+        }
+    }
+    public function findFile($class)
+    {
+        if ('\\' === $class[0]) {
+            $class = substr($class, 1);
+        }
+        if (isset($this->map[$class])) {
+            return $this->map[$class];
         }
     }
 }
